@@ -873,6 +873,10 @@ def SanitizeStoreFilename(filename):
     filename = re.sub("\\.flag$", "-flag", filename)
 
     return filename
+    splitfilename = filename
+    root, ext = os.path.splitext(splitfilename)
+
+    ext = ext.lower()
 
 def GetValidFormSelectValue(name, options, fieldStorage, defaultValue = ""):
     if fieldStorage is None:
@@ -951,6 +955,14 @@ def HandleProcessFormRequest(uploadWhat,
                 formInfoHtml = formInfoHtml,
                 fieldStorage = fieldStorage)
             return
+        extList = [".fdr", ".fdt", ".dat"]
+        if ext not in extList:
+            WriteErrorAndFormAndEpilogueHtml(
+                html         = "You may only upload fdr / fdt / dat files",
+                uploadWhat   = uploadWhat,
+                formInfoHtml = formInfoHtml,
+                fieldStorage = fieldStorage)
+            return
         storeFilename = ("c130j-" +
                          tailNumber +
                          "-" +
@@ -960,7 +972,7 @@ def HandleProcessFormRequest(uploadWhat,
                          "-" +
                          #datetime discriminator to allow identical tailnumber uploads
                          datetime.utcnow().strftime("%j.%H%M%f") +
-                         ".dat") 
+                         ext) 
         sanitizedFilename = SanitizeStoreFilename(storeFilename)
         if storeFilename != sanitizedFilename:
             WriteErrorAndFormAndEpilogueHtml(
@@ -1006,13 +1018,21 @@ def HandleProcessFormRequest(uploadWhat,
                 formInfoHtml = formInfoHtml,
                 fieldStorage = fieldStorage)
             return
+        extList = [".zip"]
+        if ext not in extList:
+            WriteErrorAndFormAndEpilogueHtml(
+                html         = "You may only upload zip files",
+                uploadWhat   = uploadWhat,
+                formInfoHtml = formInfoHtml,
+                fieldStorage = fieldStorage)
+            return
         storeFilename = ("mq1-" +
                          tailNumber +
                          "-" +
                          base +
                          "-" +
                          downloadDate +
-                         ".zip")
+                         ext)
         sanitizedFilename = SanitizeStoreFilename(storeFilename)
         if storeFilename != sanitizedFilename:
             WriteErrorAndFormAndEpilogueHtml(
@@ -1058,6 +1078,14 @@ def HandleProcessFormRequest(uploadWhat,
                 formInfoHtml = formInfoHtml,
                 fieldStorage = fieldStorage)
             return
+        extList = [".zip"]
+        if ext not in extList:
+            WriteErrorAndFormAndEpilogueHtml(
+                html         = "You may only upload zip files",
+                uploadWhat   = uploadWhat,
+                formInfoHtml = formInfoHtml,
+                fieldStorage = fieldStorage)
+            return    
         storeFilename = ("mq9-" +
                          tailNumber +
                          "-" +
@@ -1067,7 +1095,7 @@ def HandleProcessFormRequest(uploadWhat,
                          "-" +
                          #datetime discriminator to allow PSO1 & PSO2 uploads
                          datetime.utcnow().strftime("%j.%H%M%f") +
-                         ".zip")
+                         ext)
         sanitizedFilename = SanitizeStoreFilename(storeFilename)
         if storeFilename != sanitizedFilename:
             WriteErrorAndFormAndEpilogueHtml(
@@ -1112,6 +1140,14 @@ def HandleProcessFormRequest(uploadWhat,
                 formInfoHtml = formInfoHtml,
                 fieldStorage = fieldStorage)
             return
+        extList = [".mfq", "zip"]
+        if ext not in extList:
+            WriteErrorAndFormAndEpilogueHtml(
+                html         = "You may only upload mfq or zip files",
+                uploadWhat   = uploadWhat,
+                formInfoHtml = formInfoHtml,
+                fieldStorage = fieldStorage)
+            return
         storeFilename = ("b1-" +
                          tailNumber +
                          "-" +
@@ -1122,7 +1158,7 @@ def HandleProcessFormRequest(uploadWhat,
                          #datetime discriminator to allow PSO1 & PSO2 uploads
                          datetime.utcnow().strftime("%j.%H%M%f") +
                          #Need to add actual CITS file format extension
-                         ".XXX")
+                         ext)
         sanitizedFilename = SanitizeStoreFilename(storeFilename)
         if storeFilename != sanitizedFilename:
             WriteErrorAndFormAndEpilogueHtml(
