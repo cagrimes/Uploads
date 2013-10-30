@@ -7,7 +7,14 @@ import cgi
 import datetime
 from datetime import datetime
 import os
+import sys
 import re
+
+ext = None
+
+def init_ext():
+  global ext
+  ext = ext
 
 # Note: The following line should be commented-out for production.
 # import cgitb ; cgitb.enable()
@@ -1140,10 +1147,10 @@ def HandleProcessFormRequest(uploadWhat,
                 formInfoHtml = formInfoHtml,
                 fieldStorage = fieldStorage)
             return
-        extList = [".mfq", "zip"]
+        extList = [".mfq"]
         if ext not in extList:
             WriteErrorAndFormAndEpilogueHtml(
-                html         = "You may only upload mfq or zip files",
+                html         = "You may only upload mfq files",
                 uploadWhat   = uploadWhat,
                 formInfoHtml = formInfoHtml,
                 fieldStorage = fieldStorage)
